@@ -2,11 +2,13 @@ package Grafo;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Vector;
 
 import javax.swing.*;
 
 public class AlgoritmoAsignacion {
-	
+	private Vector<Nodo> nodos;
+	private Vector<Arista> aristas;
 	private int[][] matrizAdyacente;
 	private int[][] matrizAlgoritmo;
 	private boolean opcion;//maximo = true o minimo = false
@@ -18,10 +20,12 @@ public class AlgoritmoAsignacion {
 
 	private int[][] matrizOptimo;
 	
-	public AlgoritmoAsignacion(int[][] matrizAdyacente, boolean opcion) {
+	public AlgoritmoAsignacion(int[][] matrizAdyacente, boolean opcion,Vector<Nodo> nodos, Vector<Arista> aristas) {
 		super();
 		this.matrizAdyacente = matrizAdyacente;
-		this.opcion = opcion; }//end constructor class
+		this.opcion = opcion;
+		this.nodos = nodos;
+		this.aristas = aristas;}//end constructor class
 
 	public int[][] getMatrizAdyacente() {return matrizAdyacente;}
 	public void setMatrizAdyacente(int[][] matrizAdyacente) {this.matrizAdyacente = matrizAdyacente;}	
@@ -45,9 +49,12 @@ public class AlgoritmoAsignacion {
 		int[][] matrizasd = a.solve();
 		int[][] hola=multiplicarMatrices(matrizAdyacente,cambiar(matrizasd));
 		if (a.isLol()){
-			mostrar(hola);
+			mostrarString(orden(matrizAdyacente,cambiar(matrizasd)));
+			JOptionPane.showMessageDialog (null, letra(matrizAdyacente,cambiar(matrizasd)));
 			SumaAsignado(matrizAdyacente,cambiar(matrizasd));
+
 		}
+
 
 
 		//matrizAlgoritmo = escogerCeros(resta1);
@@ -77,6 +84,33 @@ public class AlgoritmoAsignacion {
 
 		return resultMat;
 	}
+	public String[][] orden(int[][] a, int[][] b){
+		String s[][] = new String[b.length][b[0].length];
+		for (int i = 0; i < b.length; i++) {
+			for (int j = 0; j < b[0].length; j++) {
+				if(b[i][j]==1){
+					s[i][j]=a[i][j]+"";
+
+				}
+				else{
+					s[i][j]="("+a[i][j]+")";
+				}
+			}
+		}
+		return s;
+	}
+	public String[] letra(int[][] a, int[][] b){
+		String al[]= new String[b.length];
+		for (int i = 0; i < b.length; i++) {
+			for (int j = 0; j < b[0].length; j++) {
+				if(b[i][j]==1){
+					al[i] = "Desde "+nodos.get(i).getNombre()+" Hasta "+nodos.get(j+b.length).getNombre();
+				}
+
+			}
+		}
+		return al;
+	}
 	public void SumaAsignado(int[][] A, int[][] B){
 		int suma=0;
 		for (int i = 0; i < B.length; i++) {
@@ -92,8 +126,8 @@ public class AlgoritmoAsignacion {
 			}
 		}
 
-		JOptionPane.showMessageDialog(null, suma);
-		System.out.println(suma);
+		JOptionPane.showMessageDialog(null, "Total: "+suma);
+
 
 	}
 	private int[][] getMinOMax(int[][] m){
@@ -617,6 +651,19 @@ public class AlgoritmoAsignacion {
 		for(int i = 0;i < c; i++) {
 			String v ="";
 			for(int j = 0; j < matrizAdy[0].length; j++) {	
+				v+= matrizAdy[i][j]+"   ";
+			}
+			m[i]=v;
+		}
+		JOptionPane.showMessageDialog (null, m);
+
+	}
+	public void mostrarString(String matrizAdy[][]) {
+		int c =matrizAdy.length;
+		String[] m= new String[c];
+		for(int i = 0;i < c; i++) {
+			String v ="";
+			for(int j = 0; j < matrizAdy[0].length; j++) {
 				v+= matrizAdy[i][j]+"   ";
 			}
 			m[i]=v;

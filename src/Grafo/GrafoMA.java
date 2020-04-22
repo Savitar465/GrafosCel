@@ -113,12 +113,12 @@ public class GrafoMA extends JPanel implements Grafo, MouseListener {
                 String valor = (String)JOptionPane.showInputDialog(null, "seleccionar opcion", "opciones",JOptionPane.DEFAULT_OPTION, null, menu,menu[0]);
                 if (valor.equalsIgnoreCase ("Maximo")) {
 						/*ds	*/
-                    AlgoritmoAsignacion cc = new AlgoritmoAsignacion (matrizCostos, true);
+                    AlgoritmoAsignacion cc = new AlgoritmoAsignacion (matrizCostos, true,nodos,aristas);
                     cc.efectuarAlgoritmo();
                     optimo = cc.getMatrizOptimo();
                 }
                 if (valor.equalsIgnoreCase ("Minimo")) {
-                    AlgoritmoAsignacion cc = new AlgoritmoAsignacion (matrizCostos, false);
+                    AlgoritmoAsignacion cc = new AlgoritmoAsignacion (matrizCostos, false,nodos,aristas);
                     cc.efectuarAlgoritmo();
                     optimo = cc.getMatrizOptimo();
                 }

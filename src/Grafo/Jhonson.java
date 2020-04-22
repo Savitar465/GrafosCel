@@ -16,7 +16,6 @@ public class Jhonson extends JPanel{
     public void eject(){
         nodos.get(0).setColor(Color.green);
         modNod();
-        orden();
 
 
     }
@@ -57,9 +56,7 @@ public class Jhonson extends JPanel{
 
 
     }
-    public void orden(){
 
-    }
 
 
 
