@@ -35,11 +35,6 @@ public class TestAlgoritmo {
                 break;
         }
 
-        ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ventana.setSize(800, 800);
-        ventana.setLocationRelativeTo(null);
-        ventana.setVisible(true);
-
     }
 
 }

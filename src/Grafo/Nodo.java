@@ -45,5 +45,6 @@ public class Nodo {
 		g.drawString(String.valueOf(nombre), x, y);
 		g.drawString(n1 + "|" + n2, x, y-30);
 
+
 	}	
 }
