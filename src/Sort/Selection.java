@@ -12,20 +12,21 @@ public class Selection extends JFrame implements ActionListener {
     private JTextField textfield1;
     private JTextPane text;
     private JTextPane text1;
-    private JTextPane temp;
+    private static JTextPane temp;
     private JLabel label1;
     private JButton boton1;
     private JButton boton2;
     private JButton boton3;
     private JButton boton4;
+    private JButton boton5;
     int c=0;
     ArrayList<Integer> al=new ArrayList<Integer>();
-    long  TFin, tiempo;
+    private static long  TFin, tiempo;
 
     static boolean basta=true;
     public static void main(String[] args) {
 
-        TInicio = System.currentTimeMillis();
+
 
 
         if (basta==true){
@@ -47,19 +48,19 @@ public class Selection extends JFrame implements ActionListener {
     public Selection() {
         setLayout(null);
         label1=new JLabel("Numero:");
-        label1.setBounds(10,10,400,30);
+        label1.setBounds(10,10,420,30);
         add(label1);
         textfield1=new JTextField();
         textfield1.setBounds(120,10,150,20);
         add(textfield1);
         text = new JTextPane();
-        text.setBounds(120,30,150,20);
+        text.setBounds(120,30,300,20);
         text.setEditable(false);
         text.setBackground(null);
         add(text);
 
         text1 = new JTextPane();
-        text1.setBounds(120,50,150,20);
+        text1.setBounds(120,50,300,20);
         text1.setEditable(false);
         text1.setBackground(null);
         add(text1);
@@ -87,8 +88,13 @@ public class Selection extends JFrame implements ActionListener {
         boton4.setBounds(450,200,100,30);
         add(boton4);
         boton4.addActionListener(this);
+        boton5=new JButton("Merge");
+        boton5.setBounds(600,200,100,30);
+        add(boton5);
+        boton5.addActionListener(this);
     }
     public static void seleccion(int A[]) {
+
         int i, j, menor, pos, tmp;
         for (i = 0; i < A.length - 1; i++) { // tomamos como menor el primero
             menor = A[i]; // de los elementos que quedan por ordenar
@@ -104,10 +110,13 @@ public class Selection extends JFrame implements ActionListener {
                 A[i] = A[pos];
                 A[pos] = tmp;
             }
-            System.out.println(A[i]);
+            System.out.println(A[pos]);
         }
+
+
     }
     public static void insercion(int[] a) {
+
         int n = a.length;
         for (int i = 1; i <= n - 1; i++) {
             int x = a[i];
@@ -120,6 +129,7 @@ public class Selection extends JFrame implements ActionListener {
         }
     }
     public static void shell(int A[]){
+
         int salto, aux, i;
         boolean cambios;
         for(salto=A.length/2; salto!=0; salto/=2){
@@ -136,12 +146,53 @@ public class Selection extends JFrame implements ActionListener {
             }
         }
     }
+    public static void mergeSort(int[] a, int n) {
+
+        if (n < 2) {
+            return;
+        }
+        int mid = n / 2;
+        int[] l = new int[mid];
+        int[] r = new int[n - mid];
+
+        for (int i = 0; i < mid; i++) {
+            l[i] = a[i];
+        }
+        for (int i = mid; i < n; i++) {
+            r[i - mid] = a[i];
+        }
+        mergeSort(l, mid);
+        mergeSort(r, n - mid);
+
+        merge(a, l, r, mid, n - mid);
+    }
+    public static void merge(
+            int[] a, int[] l, int[] r, int left, int right) {
+
+        int i = 0, j = 0, k = 0;
+        while (i < left && j < right) {
+            if (l[i] <= r[j]) {
+                a[k++] = l[i++];
+            }
+            else {
+                a[k++] = r[j++];
+            }
+        }
+        while (i < left) {
+            a[k++] = l[i++];
+        }
+        while (j < right) {
+            a[k++] = r[j++];
+        }
+    }
     public void actionPerformed(ActionEvent e) {
         String hol="";
         String orden="";
         String inser="";
         String she="";
+        String merg="";
         if (e.getSource()==boton1) {
+
             String cad=textfield1.getText();
             al.add(Integer.parseInt(cad));
             for (int i=0;i<al.size();i++){
@@ -150,8 +201,10 @@ public class Selection extends JFrame implements ActionListener {
                 text.setText(hol);
             }
 
+
         }
         if (e.getSource()==boton2){
+            TInicio = System.currentTimeMillis();
             int []A= new int[al.size()];
             for (int i=0;i<al.size();i++){
                 A[i]=al.get(i);
@@ -162,13 +215,14 @@ public class Selection extends JFrame implements ActionListener {
 
                 text1.setText(orden);
             }
-            TFin = System.currentTimeMillis(); //Tomamos la hora en que finalizó el algoritmo y la almacenamos en la variable T
+            TFin = System.currentTimeMillis();
             tiempo = TFin - TInicio; //Calculamos los milisegundos de diferencia
-            temp.setText("Tiempo en milisegundos: " + tiempo);
-            tiempo = 0;
+            temp.setText("Tiempo en milisegundos: " + tiempo); //Tomamos la hora en que finalizó el algoritmo y la almacenamos en la variable T
+
             basta=false;
         }
         if (e.getSource()==boton3) {
+            TInicio = System.currentTimeMillis();
             int []A= new int[al.size()];
             for (int i=0;i<al.size();i++){
                 A[i]=al.get(i);
@@ -182,11 +236,12 @@ public class Selection extends JFrame implements ActionListener {
             TFin = System.currentTimeMillis(); //Tomamos la hora en que finalizó el algoritmo y la almacenamos en la variable T
             tiempo = TFin - TInicio; //Calculamos los milisegundos de diferencia
             temp.setText("Tiempo en milisegundos: " + tiempo);
-            tiempo = 0;
+
             basta=false;
 
         }
         if (e.getSource()==boton4) {
+            TInicio = System.currentTimeMillis();
             int []A= new int[al.size()];
             for (int i=0;i<al.size();i++){
                 A[i]=al.get(i);
@@ -200,7 +255,26 @@ public class Selection extends JFrame implements ActionListener {
             TFin = System.currentTimeMillis(); //Tomamos la hora en que finalizó el algoritmo y la almacenamos en la variable T
             tiempo = TFin - TInicio; //Calculamos los milisegundos de diferencia
             temp.setText("Tiempo en milisegundos: " + tiempo);
-            tiempo = 0;
+
+            basta=false;
+
+        }
+        if (e.getSource()==boton5) {
+            TInicio = System.currentTimeMillis();
+            int []A= new int[al.size()];
+            for (int i=0;i<al.size();i++){
+                A[i]=al.get(i);
+            }
+            mergeSort(A,A.length);
+            for (int i=0;i<al.size();i++){
+                merg+=A[i]+"  ";
+
+                text1.setText(merg);
+            }
+            TFin = System.currentTimeMillis(); //Tomamos la hora en que finalizó el algoritmo y la almacenamos en la variable T
+            tiempo = TFin - TInicio; //Calculamos los milisegundos de diferencia
+            temp.setText("Tiempo en milisegundos: " + tiempo);
+
             basta=false;
 
         }
